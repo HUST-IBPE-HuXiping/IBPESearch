@@ -24,7 +24,7 @@ def search(request):
                         item = {}
                         item['title'] = div.find('h3').text
                         item['subtitle'] = div.find('cite').text
-                        item['link'] = div.find('cite').text
+                        item['link'] = div.find('a')['href']
                         item['date'] = div.find_all('span')[3].text
                         item['preview'] = div.find_all('span')[2].text.strip(item['date'])
                         context['items'].append(item)
