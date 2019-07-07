@@ -14,6 +14,7 @@ def search(request):
         for i in range(5):
             response = requests.get("https://www.google.com/"+"search?q="+request.GET['q']+"&start="+str(10*i-10)).text
             soup = BeautifulSoup(response, 'lxml')
+            print(response)
             divs = soup.find_all('div')
             for div in divs:
                 a = div.find('a')
@@ -41,8 +42,6 @@ def search(request):
                          request.GET['q']+
                          "&title=Special%3ASearch&profile=advanced&fulltext=1&advancedSearch-current=%7B%7D&ns0=1",
                          headers=headers).text
-
-        print(response)
         soup = BeautifulSoup(response, 'lxml')
         lis = soup.find_all('li', class_="mw-search-result")
         for li in lis:
