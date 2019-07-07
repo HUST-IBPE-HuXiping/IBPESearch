@@ -16,19 +16,18 @@ def search(request):
                                     headers=headers
                                     ).text
             soup = BeautifulSoup(response, 'lxml')
-            print(response)
             divs = soup.find_all('div')
             for div in divs:
                 a = div.find('a')
-                if a and len(div.find_all('span')) == 2 and len(div.find_all('div')) == 11:
-                    if not a['href'].find("/url?q=") == -1 and not a.text == "":
+                if a and len(div.find_all('span')) == 4 and len(div.find_all('div')) == 8:
+                    if not a.text == "":
+                        print(div)
                         item = {}
-                        item['title'] = div.find('div').find('div').find_all('div')[0].text
-                        item['subtitle'] = div.find('div').find('div').find_all('div')[1].text
-                        item['link'] = a['href'].strip("/url?q=")[:a['href'].strip("/url?q=").find("&sa=")]
-                        item['date'] = div.find_all('span')[0].text
-                        item['preview'] = div.find_all('div')[-1].text.strip(item['date']).strip(div.find_all(
-                            'span')[1].text)
+                        item['title'] = div.find('h3').text
+                        item['subtitle'] = div.find('cite').text
+                        item['link'] = div.find('cite').text
+                        item['date'] = div.find_all('span')[3].text
+                        item['preview'] = div.find_all('span')[2].text.strip(item['date'])
                         context['items'].append(item)
     if 'q' in request.GET and request.GET['action'] == 'wikipedia':
         context['items'] = []
