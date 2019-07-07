@@ -21,7 +21,6 @@ def search(request):
                 a = div.find('a')
                 if a and len(div.find_all('span')) == 4 and len(div.find_all('div')) == 8:
                     if not a.text == "":
-                        print(div)
                         item = {}
                         item['title'] = div.find('h3').text
                         item['subtitle'] = div.find('cite').text
