@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 import requests
 
 headers = {'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"}##浏览器请求头（大部分网站没有这个请求头会报错、请务必加上哦）
-
-proxies = { "http": "http://127.0.0.1:1080", "https": "http://127.0.0.1:1080", } # 调试的时候在国内需要走代理
+# TODO:Remove proxy if you are not using
+# proxies = { "http": "http://127.0.0.1:1080", "https": "http://127.0.0.1:1080", } # 调试的时候在国内需要走代理
 def search(request):
     context = {}
     if 'q' in request.GET and request.GET['action'] == 'google':
@@ -62,7 +62,7 @@ def downloadwiki(request, slug):
     pdf_url = "https://en.wikipedia.org/api/rest_v1/page/pdf/"+slug
     # TODO:Remove proxy if you are not using
     # r = requests.get(pdf_url, proxies=proxies)
-    r = requests.get(pdf_url, proxies=proxies)
+    r = requests.get(pdf_url)
     with open("pdf/"+slug + ".pdf", 'wb') as f:
         f.write(r.content)
     with open("pdf/"+slug + ".pdf", 'rb') as pdf:
