@@ -12,7 +12,9 @@ def search(request):
     if 'q' in request.GET and request.GET['action'] == 'google':
         context['items'] = []
         for i in range(5):
-            response = requests.get("https://www.google.com/"+"search?q="+request.GET['q']+"&start="+str(10*i-10)).text
+            response = requests.get("https://www.google.com/"+"search?q="+request.GET['q']+"&start="+str(10*i-10),
+                                    headers=headers
+                                    ).text
             soup = BeautifulSoup(response, 'lxml')
             print(response)
             divs = soup.find_all('div')
