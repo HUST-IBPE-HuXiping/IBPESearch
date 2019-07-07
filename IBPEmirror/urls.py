@@ -15,12 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import requests
 from . import view
 from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', view.index),
-    url('google/', view.google)
+    url(r'^$', view.search)
 ]
