@@ -18,16 +18,21 @@ def search(request):
             soup = BeautifulSoup(response, 'lxml')
             divs = soup.find_all('div')
             for div in divs:
-                a = div.find('a')
-                if a and len(div.find_all('span')) == 4 and len(div.find_all('div')) == 8:
-                    if not a.text == "":
-                        item = {}
-                        item['title'] = div.find('h3').text
-                        item['subtitle'] = div.find('cite').text
-                        item['link'] = div.find('a')['href']
-                        item['date'] = div.find_all('span')[3].text
-                        item['preview'] = div.find_all('span')[2].text.strip(item['date'])
-                        context['items'].append(item)
+                if div.find('div'):
+                    if div.find('div').find('div'):
+                        if div.find('div').find('div').find('a'):
+                            if div.find('div').find('div').find('a').find('h3'):
+                                if str(div).find('<!--m-->') == -1:
+                                    print(str(div))
+                                    item = {}
+                                    item['title'] = div.find('h3').text
+                                    item['subtitle'] = div.find('cite').text
+                                    item['link'] = div.find('a')['href']
+                                    if div.find('span', class_="st"):
+                                        item['preview'] = div.find('span', class_="st").text
+                                    else:
+                                        item['preview'] = "Preview not Supported"
+                                    context['items'].append(item)
     if 'q' in request.GET and request.GET['action'] == 'wikipedia':
         context['items'] = []
         print("https://en.wikipedia.org/w/index.php?search="+request.GET['q']+"&limit=50")
