@@ -22,5 +22,5 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', view.search),
-    url(r'^wiki/(?P<slug>[-\w]+)/$', view.downloadwiki, name='post'),
+    url(r'^wiki/(?P<slug>.*)/$', view.downloadwiki, name='post'),
 ]
